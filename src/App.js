@@ -1,7 +1,7 @@
 import React from "react";
-
+import PorDia from "./components/casos/PorDia/index";
 function App() {
-    return <></>;
+    return <PorDia></PorDia>;
 }
 
 export default App;

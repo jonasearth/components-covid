@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import api from "../../../services/api";
 import {
-    BarChart,
+    LineChart,
     Bar,
-    Cell,
+    Line,
     XAxis,
     YAxis,
     CartesianGrid,
@@ -10,71 +11,93 @@ import {
     Legend
 } from "recharts";
 
-const porDia = props => {
-    const data = [
+const PorDia = props => {
+    const [resultados, setResultados] = useState([
         {
-            name: "Page A",
-            uv: 4000,
-            pv: 2400,
-            amt: 2400
-        },
-        {
-            name: "Page B",
-            uv: 3000,
-            pv: 1398,
-            amt: 2210
-        },
-        {
-            name: "Page C",
-            uv: 2000,
-            pv: 9800,
-            amt: 2290
-        },
-        {
-            name: "Page D",
-            uv: 2780,
-            pv: 3908,
-            amt: 2000
-        },
-        {
-            name: "Page E",
-            uv: 1890,
-            pv: 4800,
-            amt: 2181
-        },
-        {
-            name: "Page F",
-            uv: 2390,
-            pv: 3800,
-            amt: 2500
-        },
-        {
-            name: "Page G",
-            uv: 3490,
-            pv: 4300,
-            amt: 2100
+            state: "",
+            day: "",
+            num_confirmed: "",
+            num_suspect: "",
+            num_rejected: ""
         }
-    ];
+    ]);
+    const [days, setDays] = useState({
+        days: ""
+    });
+    const [dayf, setDayf] = useState({
+        dayf: ""
+    });
 
+    function setDaysF(event) {
+        const date = event.target.value;
+        const formated = date
+            .split("-")
+            .reverse()
+            .join("/");
+        setDays({ days: formated });
+    }
+    function setDayfF(event) {
+        const date = event.target.value;
+        const formated = date
+            .split("-")
+            .reverse()
+            .join("/");
+        setDayf({ dayf: formated });
+    }
+    useEffect(() => {
+        api.post("/total-cases-day").then(response => {
+            let buffer = [];
+            response.data.forEach((data, i) => {
+                buffer = [
+                    ...buffer,
+                    {
+                        state: data.state,
+                        day: data.day,
+                        num_confirmed: data.num_confirmed,
+                        num_suspect: data.num_suspect,
+                        num_rejected: data.num_rejected
+                    }
+                ];
+            });
+            // Ordering by latitude
+            buffer.sort((a, b) => {
+                return a.day - b.day;
+            });
+            setResultados(buffer);
+        });
+    }, [resultados.day, resultados.state]);
+    console.log(days);
+    console.log(dayf);
     return (
-        <BarChart
-            width={500}
-            height={300}
-            data={data}
-            margin={{
-                top: 5,
-                right: 30,
-                left: 20,
-                bottom: 5
-            }}
-        >
-            <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="name" />
-            <YAxis />
-            <Tooltip />
-            <Legend />
-            <Bar dataKey="pv" fill="#8884d8" />
-            <Bar dataKey="uv" fill="#82ca9d" />
-        </BarChart>
+        <>
+            <input type="date" onInput={e => setDaysF(e)}></input>
+            <input type="date" onInput={e => setDayfF(e)}></input>
+            <LineChart
+                width={500}
+                height={300}
+                data={resultados}
+                margin={{
+                    top: 5,
+                    right: 30,
+                    left: 20,
+                    bottom: 5
+                }}
+            >
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis dataKey="day" />
+                <YAxis />
+                <Tooltip />
+                <Legend />
+                <Line
+                    type="monotone"
+                    dataKey="num_confirmed"
+                    stroke="#0000ff"
+                />
+                <Line type="monotone" dataKey="num_suspect" stroke="#00ff00" />
+                <Line type="monotone" dataKey="num_rejected" stroke="#ff0000" />
+            </LineChart>
+        </>
     );
 };
+
+export default PorDia;
