@@ -117,16 +117,22 @@ const Acumulados = props => {
                 <Tooltip />
                 <Legend />
                 <Line
+                    name="Confirmados"
                     type="monotone"
                     dataKey="num_confirmed"
                     stroke="#0000ff"
                 />
                 <Line
+                    name="Recuperados"
                     type="monotone"
                     dataKey="num_recovered"
                     stroke="#00ff00"
                 />
-                <Line type="monotone" dataKey="num_deaths" stroke="#ff0000" />
+                <Line
+                name="Mortes" 
+                type="monotone" 
+                dataKey="num_deaths" 
+                stroke="#ff0000" />
             </LineChart>
         </>
     );
