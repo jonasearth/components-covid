@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import api from "../../../services/api";
+import Styles from './Styles'
 import {
     LineChart,
     Bar,
@@ -69,9 +70,9 @@ const Acumulados = props => {
     console.log(days);
     console.log(dayf);
     return (
-        <>
-            <input type="date" onInput={e => setDaysF(e)}></input>
-            <input type="date" onInput={e => setDayfF(e)}></input>
+        <div style = {{...Styles.default}}>
+            <input style={ {...Styles.date}} type="date" onInput={e => setDaysF(e)}></input>
+            <input style={ {...Styles.date}} type="date" onInput={e => setDayfF(e)}></input>
             <LineChart
                 width={500}
                 height={300}
@@ -89,14 +90,16 @@ const Acumulados = props => {
                 <Tooltip />
                 <Legend />
                 <Line
+                    name="Numero Confirmado"
                     type="monotone"
                     dataKey="num_confirmed"
                     stroke="#0000ff"
                 />
-                <Line type="monotone" dataKey="num_suspect" stroke="#00ff00" />
+                <Line 
+                type="monotone" dataKey="num_suspect" stroke="#00ff00" />
                 <Line type="monotone" dataKey="num_rejected" stroke="#ff0000" />
             </LineChart>
-        </>
+        </div>
     );
 };
 
