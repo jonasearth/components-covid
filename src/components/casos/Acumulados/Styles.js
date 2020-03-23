@@ -6,7 +6,7 @@ const Styles = {
         alignItems: "center"
     },
     formatting: {
-        backgroundColor: "#0002",
+        backgroundColor: "transparent",
         justifyContent: "space-around"
     },
     date: {

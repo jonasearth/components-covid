@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import api from "../../../services/api";
+import Styles from "./Styles"
 import {
     LineChart,
     Line,
@@ -89,53 +90,55 @@ const Acumulados = props => {
     }, [dayf, days, resultados.day, resultados.state]);
 
     return (
-        <>
-            <input
-                type="date"
-                defaultValue={days.days}
-                onInput={e => setDaysF(e)}
-            ></input>
-            <input
-                type="date"
-                defaultValue={dayf.dayf}
-                onInput={e => setDayfF(e)}
-            ></input>
-            <LineChart
-                width={500}
-                height={300}
-                data={resultados}
-                margin={{
-                    top: 5,
-                    right: 30,
-                    left: 20,
-                    bottom: 5
-                }}
-            >
-                <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="day" />
-                <YAxis />
-                <Tooltip />
-                <Legend />
-                <Line
-                    name="Confirmados"
-                    type="monotone"
-                    dataKey="num_confirmed"
-                    stroke="#0000ff"
-                />
-                <Line
-                    name="Recuperados"
-                    type="monotone"
-                    dataKey="num_recovered"
-                    stroke="#00ff00"
-                />
-                <Line
-                name="Mortes" 
-                type="monotone" 
-                dataKey="num_deaths" 
-                stroke="#ff0000" />
-            </LineChart>
-        </>
-    );
+    <div style={{ ...Styles.default }}>
+      <div style={{...Styles.formatting}}>
+        <input
+          style={{ ...Styles.date }}
+          type="date"
+          onInput={e => setDaysF(e)}
+        ></input>
+        <input
+          style={{ ...Styles.date }}
+          type="date"
+          onInput={e => setDayfF(e)}
+        ></input>
+      </div>
+      <LineChart
+        width={500}
+        height={300}
+        data={resultados}
+        margin={{
+          top: 5,
+          right: 30,
+          left: 20,
+          bottom: 5
+        }}
+      >
+        <CartesianGrid strokeDasharray="3 3" />
+        <XAxis dataKey="day" />
+        <YAxis />
+        <Tooltip />
+        <Legend />
+        <Line
+          name="Confirmados"
+          type="monotone"
+          dataKey="num_confirmed"
+          stroke="#0000ff"
+        />
+        <Line
+        name = "Recuperados"
+         type="monotone" 
+        dataKey="num_recovered" 
+        stroke="#00ff00" />
+        <Line 
+        name="Mortes"
+        type="monotone" 
+        dataKey="num_deaths" 
+        stroke="#ff0000" />
+      </LineChart>
+    </div>
+  );
 };
+;
 
 export default Acumulados;
