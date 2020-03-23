@@ -1,13 +1,16 @@
 const Styles = {
     default:{
         display:'flex',
-        flexDirection: 'row',
+        flexDirection: 'column',
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: '#0002'
+    },
+    formatting:{
+        backgroundColor: '#0002',
+        justifyContent: 'space-around',
     },
     date: {
-        backgroundColor: '#0002'
+        fontFamily: 'Arial',
     }
 }
 export default Styles;
