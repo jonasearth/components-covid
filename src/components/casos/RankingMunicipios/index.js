@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import api from "../../../services/api";
+import Styles from './Styles'
 import {
     ComposedChart,
     Bar,
@@ -40,7 +41,7 @@ const RankingMunicipios = props => {
     }, [resultados.day, resultados.state]);
 
     return (
-        <>
+        <div style={{...Styles.default}}>
             <ComposedChart
                 layout="vertical"
                 width={500}
@@ -68,7 +69,7 @@ const RankingMunicipios = props => {
                     <LabelList dataKey="confirmed" position="right" />
                 </Bar>
             </ComposedChart>
-        </>
+        </div>
     );
 };
 
