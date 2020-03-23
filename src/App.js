@@ -1,9 +1,10 @@
 import React from "react";
+import RankingMunicipios from "./components/casos/RankingMunicipios/index";
 import Acumulados from "./components/casos/Acumulados/index";
-import RankingMunicipios from "./components/casos/RankingMunicipios"
 function App() {
     return (
         <>
+            <RankingMunicipios></RankingMunicipios>
             <Acumulados></Acumulados>
         </>
     );
