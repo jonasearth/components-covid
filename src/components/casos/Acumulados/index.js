@@ -94,7 +94,7 @@ const Acumulados = props => {
                     stroke="#0000ff"
                 />
                 <Line type="monotone" 
-                dataKey="num_suspect" 
+                dataKey="num_suspect"
                 name="Casos suspeitos"
                 stroke="#00ff00" />
                 <Line type="monotone" 
