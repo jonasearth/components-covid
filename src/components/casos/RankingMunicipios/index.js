@@ -14,40 +14,31 @@ import {
 const RankingMunicipios = props => {
     const [resultados, setResultados] = useState([
         {
-            geometry: {
-                coordinates: []
-            },
-
             name_city: "",
-            num_cases: 0
+            confirmed: 0
         }
     ]);
 
     useEffect(() => {
-        api.post("/cases-city").then(response => {
+        api.post("/total-cases-city").then(response => {
             let buffer = [];
-            response.data.features.forEach((data, i) => {
-                console.log(data);
+            response.data.forEach((data, i) => {
                 buffer = [
                     ...buffer,
                     {
-                        geometry: {
-                            coordinates: data.coordinates
-                        },
-
-                        name_city: data.properties.name_city,
-                        num_cases: data.properties.num_cases
+                        name_city: data.name_city,
+                        confirmed: data.confirmed
                     }
                 ];
             });
             // Ordering by latitude
             buffer.sort((b, a) => {
-                return a.num_cases - b.num_cases;
+                return a.confirmed - b.confirmed;
             });
             setResultados(buffer);
         });
     }, [resultados.day, resultados.state]);
-    console.log(resultados);
+
     return (
         <>
             <ComposedChart
@@ -70,11 +61,11 @@ const RankingMunicipios = props => {
 
                 <Bar
                     name="Casos Confirmados"
-                    dataKey="num_cases"
+                    dataKey="confirmed"
                     barSize={20}
                     fill="#413ea0"
                 >
-                    <LabelList dataKey="num_cases" position="right" />
+                    <LabelList dataKey="confirmed" position="right" />
                 </Bar>
             </ComposedChart>
         </>
