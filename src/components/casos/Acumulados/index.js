@@ -12,26 +12,6 @@ import {
 } from "recharts";
 
 const Acumulados = props => {
-    const date = new Date();
-    const final = date
-        .toLocaleDateString()
-        .split("/")
-        .reverse()
-        .join("-");
-    const [dayf, setDayf] = useState({
-        dayf: final
-    });
-    date.setDate(date.getDate() - 7);
-    const init = date
-        .toLocaleDateString()
-        .split("/")
-        .reverse()
-        .join("-");
-
-    const [days, setDays] = useState({
-        days: init
-    });
-
     const [resultados, setResultados] = useState([
         {
             state: "",
@@ -42,22 +22,11 @@ const Acumulados = props => {
         }
     ]);
 
-    function setDaysF(event) {
-        const date = event.target.value;
-
-        setDays({ days: date });
-    }
-    function setDayfF(event) {
-        const date = event.target.value;
-
-        setDayf({ dayf: date });
-    }
-
     useEffect(() => {
         api.post("/in-range", {
             dates: {
-                first: days.days,
-                last: dayf.dayf
+                first: props.init,
+                last: props.fim
             }
         }).then(response => {
             let buffer = [];
@@ -87,60 +56,44 @@ const Acumulados = props => {
 
             setResultados(buffer);
         });
-    }, [dayf, days, resultados.day, resultados.state]);
+    }, [props.fim, props.init, resultados.day, resultados.state]);
 
     return (
-        <div style={{ ...Styles.default }}>
-            <div style={{ ...Styles.formatting }}>
-                <input
-                    style={{ ...Styles.date }}
-                    type="date"
-                    defaultValue={days.days}
-                    onInput={e => setDaysF(e)}
-                ></input>
-                <input
-                    style={{ ...Styles.date }}
-                    type="date"
-                    defaultValue={dayf.dayf}
-                    onInput={e => setDayfF(e)}
-                ></input>
-            </div>
-            <LineChart
-                width={500}
-                height={300}
-                data={resultados}
-                margin={{
-                    top: 5,
-                    right: 30,
-                    left: 20,
-                    bottom: 5
-                }}
-            >
-                <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="day" />
-                <YAxis />
-                <Tooltip />
-                <Legend />
-                <Line
-                    name="Confirmados"
-                    type="monotone"
-                    dataKey="num_confirmed"
-                    stroke="#f59b1a"
-                />
-                <Line
-                    name="Recuperados"
-                    type="monotone"
-                    dataKey="num_recovered"
-                    stroke="#0f9b0f"
-                />
-                <Line
-                    name="Mortes"
-                    type="monotone"
-                    dataKey="num_deaths"
-                    stroke="#c31432"
-                />
-            </LineChart>
-        </div>
+        <LineChart
+            width={500}
+            height={300}
+            data={resultados}
+            margin={{
+                top: 5,
+                right: 30,
+                left: 20,
+                bottom: 5
+            }}
+        >
+            <CartesianGrid strokeDasharray="3 3" />
+            <XAxis dataKey="day" />
+            <YAxis />
+            <Tooltip />
+            <Legend />
+            <Line
+                name="Confirmados"
+                type="monotone"
+                dataKey="num_confirmed"
+                stroke="#f59b1a"
+            />
+            <Line
+                name="Recuperados"
+                type="monotone"
+                dataKey="num_recovered"
+                stroke="#0f9b0f"
+            />
+            <Line
+                name="Mortes"
+                type="monotone"
+                dataKey="num_deaths"
+                stroke="#c31432"
+            />
+        </LineChart>
     );
 };
 export default Acumulados;
