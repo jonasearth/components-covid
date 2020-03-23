@@ -11,7 +11,7 @@ import {
     Legend
 } from "recharts";
 
-const PorDia = props => {
+const Acumulados = props => {
     const [resultados, setResultados] = useState([
         {
             state: "",
@@ -100,4 +100,4 @@ const PorDia = props => {
     );
 };
 
-export default PorDia;
+export default Acumulados;

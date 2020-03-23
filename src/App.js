@@ -1,7 +1,7 @@
 import React from "react";
-import PorDia from "./components/casos/PorDia/index";
+import Acumulados from "./components/casos/PorDia/index";
 function App() {
-    return <PorDia></PorDia>;
+    return <Acumulados></Acumulados>;
 }
 
 export default App;
