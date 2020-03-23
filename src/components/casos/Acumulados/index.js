@@ -3,7 +3,6 @@ import api from "../../../services/api";
 import Styles from './Styles'
 import {
     LineChart,
-    Bar,
     Line,
     XAxis,
     YAxis,
