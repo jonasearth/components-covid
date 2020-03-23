@@ -89,11 +89,18 @@ const Acumulados = props => {
                 <Legend />
                 <Line
                     type="monotone"
+                    name="Casos confirmados"
                     dataKey="num_confirmed"
                     stroke="#0000ff"
                 />
-                <Line type="monotone" dataKey="num_suspect" stroke="#00ff00" />
-                <Line type="monotone" dataKey="num_rejected" stroke="#ff0000" />
+                <Line type="monotone" 
+                dataKey="num_suspect" 
+                name="Casos suspeitos"
+                stroke="#00ff00" />
+                <Line type="monotone" 
+                name="Casos negativos"
+                dataKey="num_rejected" 
+                stroke="#ff0000" />
             </LineChart>
         </>
     );
