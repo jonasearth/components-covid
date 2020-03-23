@@ -123,18 +123,18 @@ const Acumulados = props => {
           name="Confirmados"
           type="monotone"
           dataKey="num_confirmed"
-          stroke="#0000ff"
+          stroke="#4b6cb7"
         />
         <Line
         name = "Recuperados"
          type="monotone" 
         dataKey="num_recovered" 
-        stroke="#00ff00" />
+        stroke="#0f9b0f" />
         <Line 
         name="Mortes"
         type="monotone" 
         dataKey="num_deaths" 
-        stroke="#ff0000" />
+        stroke="#c31432" />
       </LineChart>
     </div>
   );

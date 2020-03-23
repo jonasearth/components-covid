@@ -10,7 +10,8 @@ const Styles = {
         justifyContent: "space-around"
     },
     date: {
-        fontFamily: "Arial"
+        fontFamily: "Arial",
+        marginRight: '10px'
     }
 };
 export default Styles;
