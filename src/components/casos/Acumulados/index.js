@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import api from "../../../services/api";
+
 import Styles from "./Styles";
 import {
     LineChart,
@@ -59,41 +60,43 @@ const Acumulados = props => {
     }, [props.fim, props.init, resultados.day, resultados.state]);
 
     return (
-        <LineChart
-            width={500}
-            height={300}
-            data={resultados}
-            margin={{
-                top: 5,
-                right: 30,
-                left: 20,
-                bottom: 5
-            }}
-        >
-            <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="day" />
-            <YAxis />
-            <Tooltip />
-            <Legend />
-            <Line
-                name="Confirmados"
-                type="monotone"
-                dataKey="num_confirmed"
-                stroke="#f59b1a"
-            />
-            <Line
-                name="Recuperados"
-                type="monotone"
-                dataKey="num_recovered"
-                stroke="#0f9b0f"
-            />
-            <Line
-                name="Mortes"
-                type="monotone"
-                dataKey="num_deaths"
-                stroke="#c31432"
-            />
-        </LineChart>
+        <>
+            <LineChart
+                width={500}
+                height={300}
+                data={resultados}
+                margin={{
+                    top: 5,
+                    right: 30,
+                    left: 20,
+                    bottom: 5
+                }}
+            >
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis dataKey="day" />
+                <YAxis />
+                <Tooltip />
+                <Legend />
+                <Line
+                    name="Confirmados"
+                    type="monotone"
+                    dataKey="num_confirmed"
+                    stroke="#f59b1a"
+                />
+                <Line
+                    name="Recuperados"
+                    type="monotone"
+                    dataKey="num_recovered"
+                    stroke="#0f9b0f"
+                />
+                <Line
+                    name="Mortes"
+                    type="monotone"
+                    dataKey="num_deaths"
+                    stroke="#c31432"
+                />
+            </LineChart>
+        </>
     );
 };
 export default Acumulados;

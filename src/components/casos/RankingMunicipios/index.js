@@ -1,74 +1,72 @@
 import React, { useEffect, useState } from "react";
+import axios from "axios";
 import api from "../../../services/api";
 import Styles from "./Styles";
-import {
-    ComposedChart,
-    Bar,
-    LabelList,
-    XAxis,
-    YAxis,
-    CartesianGrid,
-    Tooltip,
-    Legend
-} from "recharts";
+import Highcharts from "highcharts";
+import HighchartsReact from "highcharts-react-official";
 
 const RankingMunicipios = props => {
-    const [resultados, setResultados] = useState([
-        {
-            name_city: "",
-            confirmed: 0
-        }
-    ]);
+    const [resultados, setResultados] = useState({
+        name: [],
+        casos: []
+    });
 
     useEffect(() => {
-        api.post("/total-cases-city").then(response => {
-            let buffer = [];
-            response.data.forEach((data, i) => {
-                buffer = [
-                    ...buffer,
-                    {
-                        name_city: data.name_city,
-                        confirmed: data.confirmed
-                    }
-                ];
-            });
-            // Ordering by latitude
+        axios.post("http://localhost").then(response => {
+            const buffer = response.data;
+
             buffer.sort((b, a) => {
                 return a.confirmed - b.confirmed;
             });
-            setResultados(buffer);
+            let info = { name: [], casos: [] };
+
+            buffer.forEach((data, i) => {
+                info.name = [...info.name, data.name_city];
+                info.casos = [...info.casos, data.confirmed];
+            });
+            setResultados({ name: info.name, casos: info.casos });
         });
     }, [resultados.day, resultados.state]);
 
+    const options = {
+        title: {
+            text: "Ranking dos Municipios"
+        },
+        chart: {
+            zoomType: "x"
+        },
+        xAxis: {
+            categories: resultados.name
+        },
+        plotOptions: {
+            bar: {
+                dataLabels: {
+                    enabled: true
+                }
+            }
+        },
+        yAxis: {
+            min: 0,
+            scrollbar: {
+                enabled: true
+            },
+            title: {
+                text: ""
+            }
+        },
+        series: [
+            {
+                type: "bar",
+                name: "Casos Confirmados",
+                data: resultados.casos,
+                color: "#f59b1a"
+            }
+        ]
+    };
+
     return (
         <div style={{ ...Styles.default }}>
-            <ComposedChart
-                layout="vertical"
-                width={500}
-                height={400}
-                data={resultados}
-                margin={{
-                    top: 10,
-                    right: 10,
-                    bottom: 10,
-                    left: 10
-                }}
-            >
-                <CartesianGrid stroke="#f5f5f5" />
-                <XAxis type="number" />
-                <YAxis dataKey="name_city" type="category" />
-                <Tooltip />
-                <Legend />
-
-                <Bar
-                    name="Casos Confirmados"
-                    dataKey="confirmed"
-                    barSize={20}
-                    fill="#f59b1a"
-                >
-                    <LabelList dataKey="confirmed" position="right" />
-                </Bar>
-            </ComposedChart>
+            <HighchartsReact highcharts={Highcharts} options={options} />
         </div>
     );
 };
